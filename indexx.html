@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Spice Garden - Indian multi-cuisine restaurant in Bengaluru. Explore our menu and request a table reservation." />
+  <title>Spice Garden | Authentic Flavours</title>
+  <style>
+    :root {
+      --green: #183b2d;
+      --green-light: #285741;
+      --gold: #e7ad45;
+      --cream: #fffaf1;
+      --ink: #25251f;
+      --muted: #6d7068;
+      --white: #fff;
+      --shadow: 0 12px 35px rgba(26, 39, 30, .12);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .container { width: min(1120px, 92%); margin: auto; }
+    .topbar {
+      background: #10291f; color: #f9f2e6; font-size: .88rem;
+      padding: 8px 0;
+    }
+    .topbar .container { display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+    header {
+      background: rgba(255,250,241,.96); position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 3px 16px rgba(0,0,0,.06);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { color: var(--green); font-size: 1.55rem; font-weight: 800; letter-spacing: .3px; }
+    .brand span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 25px; list-style: none; }
+    .nav-links a { font-size: .94rem; font-weight: 600; }
+    .nav-links a:hover { color: #a66c16; }
+    .nav-toggle { display: none; border: 0; background: none; font-size: 1.7rem; cursor: pointer; color: var(--green); }
+    .btn {
+      display: inline-block; border: 0; border-radius: 5px; padding: 12px 21px;
+      background: var(--gold); color: #21190d; font-weight: 700; cursor: pointer;
+      transition: transform .2s, background .2s;
+    }
+    .btn:hover { background: #f0bd60; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: white; border: 1px solid rgba(255,255,255,.8); margin-left: 8px; }
+    .btn-outline:hover { color: var(--green); background: white; }
+    .hero {
+      min-height: 590px; display: flex; align-items: center; color: white;
+      background:
+        linear-gradient(90deg, rgba(9,28,20,.88), rgba(9,28,20,.55), rgba(9,28,20,.15)),
+        url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=85") center/cover;
+    }
+    .hero-content { max-width: 650px; padding: 90px 0; }
+    .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 3px; font-size: .78rem; font-weight: 800; }
+    h1 { font-size: clamp(2.7rem, 6vw, 5rem); line-height: 1.08; margin: 17px 0; }
+    .hero p { max-width: 560px; color: #f4eee5; font-size: 1.08rem; margin-bottom: 28px; }
+    section { padding: 82px 0; }
+    .section-heading { text-align: center; max-width: 680px; margin: 0 auto 42px; }
+    .section-heading .eyebrow { color: #a66c16; }
+    h2 { color: var(--green); font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.2; margin: 9px 0 12px; }
+    .section-heading p, .muted { color: var(--muted); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .about-image {
+      min-height: 390px; border-radius: 12px; box-shadow: var(--shadow);
+      background: url("https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1100&q=85") center/cover;
+    }
+    .about-copy p { color: var(--muted); margin: 14px 0 22px; }
+    .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .feature { background: #f2eddf; padding: 12px 14px; border-radius: 7px; font-weight: 700; color: var(--green); }
+    .menu-section { background: #f4efe4; }
+    .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .menu-card { background: white; border-radius: 10px; padding: 22px; box-shadow: 0 6px 20px rgba(0,0,0,.05); }
+    .menu-card h3 { color: var(--green); border-bottom: 1px solid #e8e1d4; padding-bottom: 12px; margin-bottom: 12px; }
+    .dish { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px dashed #e8e1d4; font-size: .94rem; }
+    .dish:last-child { border: 0; }
+    .price { color: #a66c16; font-weight: 800; white-space: nowrap; }
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .info-card { background: white; padding: 28px; border-radius: 10px; box-shadow: var(--shadow); }
+    .info-card h3 { color: var(--green); margin-bottom: 14px; }
+    .hours-row { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee9df; }
+    .hours-row:last-child { border: 0; }
+    .booking-section { background: var(--green); color: white; }
+    .booking-section h2 { color: white; }
+    .booking-section .section-heading p { color: #d9e3dc; }
+    .booking-form { max-width: 780px; margin: auto; background: white; color: var(--ink); padding: 30px; border-radius: 12px; box-shadow: var(--shadow); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    label { font-weight: 700; font-size: .9rem; }
+    input, select, textarea { width: 100%; padding: 12px; border: 1px solid #d9d9d2; border-radius: 5px; background: #fff; color: var(--ink); }
+    input:focus, select:focus, textarea:focus { outline: 2px solid #e7ad45; border-color: transparent; }
+    .booking-form .btn { margin-top: 18px; width: 100%; }
+    .form-note { color: var(--muted); font-size: .82rem; margin-top: 12px; }
+    #bookingMessage { margin-top: 14px; color: var(--green); font-weight: 700; }
+    .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .contact-card { background: white; padding: 24px; border-radius: 9px; box-shadow: 0 6px 20px rgba(0,0,0,.05); }
+    .contact-card h3 { color: var(--green); margin-bottom: 8px; }
+    footer { background: #10291f; color: #e9eee9; padding: 30px 0; text-align: center; }
+    footer p { color: #bdc9c0; font-size: .9rem; margin-top: 5px; }
+    @media (max-width: 850px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none; position: absolute; top: 76px; left: 0; right: 0;
+        background: var(--cream); padding: 20px 4%; flex-direction: column; align-items: flex-start;
+        box-shadow: 0 12px 18px rgba(0,0,0,.08);
+      }
+      .nav-links.open { display: flex; }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { gap: 28px; }
+    }
+    @media (max-width: 620px) {
+      .topbar .container { justify-content: center; text-align: center; }
+      .hero { min-height: 540px; }
+      .hero-content { padding: 70px 0; }
+      .btn-outline { margin: 10px 0 0; }
+      section { padding: 62px 0; }
+      .about-grid, .hours-grid, .contact-grid, .form-grid { grid-template-columns: 1fr; }
+      .about-image { min-height: 280px; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+      .booking-form { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <span>📍 Bengaluru, Karnataka</span>
+      <span>Call us: +91 98765 43210 · Open daily from 10:00 AM</span>
+    </div>
+  </div>
+
+  <header>
+    <nav class="container nav" aria-label="Main navigation">
+      <a class="brand" href="#home">Spice <span>Garden</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#hours">Opening Hours</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="btn" href="#booking">Book a Table</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">Welcome to Spice Garden</div>
+          <h1>Good Food.<br />Great Moments.</h1>
+          <p>Discover delicious Indian and multi-cuisine favourites, freshly prepared and served with warmth. Bring your friends and family to the table.</p>
+          <a class="btn" href="#menu">Explore Our Menu</a>
+          <a class="btn btn-outline" href="#booking">Reserve a Table</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="about-image" role="img" aria-label="Restaurant dining area"></div>
+        <div class="about-copy">
+          <div class="eyebrow">Our Story</div>
+          <h2>A place for every craving</h2>
+          <p>At Spice Garden, we bring together much-loved flavours from across India and beyond. Whether you are joining us for a family meal, a quick bite, or a special celebration, we want every visit to feel welcoming.</p>
+          <p>Choose from vegetarian favourites, delicious non-vegetarian dishes, biryanis, South Indian classics, Chinese selections, desserts, and refreshing beverages.</p>
+          <div class="feature-list">
+            <div class="feature">✓ Freshly prepared food</div>
+            <div class="feature">✓ Family-friendly dining</div>
+            <div class="feature">✓ Custom order requests</div>
+            <div class="feature">✓ Group reservations</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">A taste for everyone</div>
+          <h2>Explore Our Menu</h2>
+          <p>A selection of customer favourites. All prices shown are sample prices in Indian Rupees.</p>
+        </div>
+        <div class="menu-grid">
+          <article class="menu-card">
+            <h3>Vegetarian Starters</h3>
+            <div class="dish"><span>Veg Manchurian</span><span class="price">₹180</span></div>
+            <div class="dish"><span>Gobi Manchurian</span><span class="price">₹160</span></div>
+            <div class="dish"><span>Paneer Tikka</span><span class="price">₹240</span></div>
+            <div class="dish"><span>Crispy Corn</span><span class="price">₹190</span></div>
+            <div class="dish"><span>Chilli Paneer</span><span class="price">₹220</span></div>
+          </article>
+          <article class="menu-card">
+            <h3>Non-Veg Starters</h3>
+            <div class="dish"><span>Chicken 65</span><span class="price">₹250</span></div>
+            <div class="dish"><span>Chicken Lollipop</span><span class="price">₹280</span></div>
+            <div class="dish"><span>Chicken Tikka</span><span class="price">₹290</span></div>
+            <div class="dish"><span>Chilli Chicken</span><span class="price">₹270</span></div>
+            <div class="dish"><span>Fish Fry</span><span class="price">₹320</span></div>
+          </article>
+          <article class="menu-card">
+            <h3>Main Course</h3>
+            <div class="dish"><span>Paneer Butter Masala</span><span class="price">₹260</span></div>
+            <div class="dish"><span>Dal Tadka</span><span class="price">₹180</span></div>
+            <div class="dish"><span>Butter Chicken</span><span class="price">₹320</span></div>
+            <div class="dish"><span>Chicken Chettinad</span><span class="price">₹320</span></div>
+            <div class="dish"><span>Fish Curry</span><span class="price">₹330</span></div>
+          </article>
+          <article class="menu-card">
+            <h3>Rice & Biryani</h3>
+            <div class="dish"><span>Jeera Rice</span><span class="price">₹140</span></div>
+            <div class="dish"><span>Veg Biryani</span><span class="price">₹200</span></div>
+            <div class="dish"><span>Paneer Biryani</span><span class="price">₹240</span></div>
+            <div class="dish"><span>Chicken Biryani</span><span class="price">₹280</span></div>
+            <div class="dish"><span>Mutton Biryani</span><span class="price">₹380</span></div>
+          </article>
+          <article class="menu-card">
+            <h3>South Indian</h3>
+            <div class="dish"><span>Idli (2 pieces)</span><span class="price">₹50</span></div>
+            <div class="dish"><span>Plain Dosa</span><span class="price">₹80</span></div>
+            <div class="dish"><span>Masala Dosa</span><span class="price">₹100</span></div>
+            <div class="dish"><span>Ghee Dosa</span><span class="price">₹120</span></div>
+            <div class="dish"><span>Uttapam</span><span class="price">₹100</span></div>
+          </article>
+          <article class="menu-card">
+            <h3>Desserts & Drinks</h3>
+            <div class="dish"><span>Gulab Jamun</span><span class="price">₹80</span></div>
+            <div class="dish"><span>Brownie</span><span class="price">₹130</span></div>
+            <div class="dish"><span>Ice Cream</span><span class="price">₹90</span></div>
+            <div class="dish"><span>Sweet Lassi</span><span class="price">₹90</span></div>
+            <div class="dish"><span>Cold Coffee</span><span class="price">₹120</span></div>
+          </article>
+        </div>
+        <p class="muted" style="text-align:center;margin-top:22px;font-size:.88rem;">Menu and prices are illustrative. Please confirm current availability and pricing with the restaurant.</p>
+      </div>
+    </section>
+
+    <section id="hours">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Plan your visit</div>
+          <h2>Opening Hours</h2>
+          <p>We look forward to welcoming you.</p>
+        </div>
+        <div class="hours-grid">
+          <div class="info-card">
+            <h3>Restaurant Hours</h3>
+            <div class="hours-row"><span>Monday – Thursday</span><strong>10 AM – 10:30 PM</strong></div>
+            <div class="hours-row"><span>Friday – Sunday</span><strong>10 AM – 11 PM</strong></div>
+            <p class="muted" style="margin-top:14px;font-size:.88rem;">Last dine-in order is planned for 30 minutes before closing. Holiday hours may vary.</p>
+          </div>
+          <div class="info-card">
+            <h3>Meal Times</h3>
+            <div class="hours-row"><span>Breakfast</span><strong>10 – 11:30 AM</strong></div>
+            <div class="hours-row"><span>Lunch</span><strong>12 – 3:30 PM</strong></div>
+            <div class="hours-row"><span>Evening Snacks</span><strong>4 – 7 PM</strong></div>
+            <div class="hours-row"><span>Dinner</span><strong>7 – 10:30 PM</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking-section" id="booking">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Your table is waiting</div>
+          <h2>Request a Reservation</h2>
+          <p>Share your details and preferred time. This demo form prepares a request; it does not check live table availability or create a confirmed booking.</p>
+        </div>
+        <form class="booking-form" id="bookingForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone Number</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91" pattern="[0-9+ -]{8,16}" required />
+            </div>
+            <div class="field">
+              <label for="date">Reservation Date</label>
+              <input id="date" name="date" type="date" required />
+            </div>
+            <div class="field">
+              <label for="time">Preferred Time</label>
+              <input id="time" name="time" type="time" min="10:00" max="22:30" required />
+            </div>
+            <div class="field">
+              <label for="guests">Number of Guests</label>
+              <select id="guests" name="guests" required>
+                <option value="">Select guests</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option>
+                <option>5</option><option>6</option><option>7</option><option>8</option>
+                <option>9</option><option>10</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="seating">Seating Preference</label>
+              <select id="seating" name="seating">
+                <option>Any available table</option>
+                <option>Small table</option>
+                <option>Family table</option>
+                <option>Large group table</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="requests">Special Requests</label>
+              <textarea id="requests" name="requests" rows="3" placeholder="Celebration, seating request, or other details"></textarea>
+            </div>
+          </div>
+          <button class="btn" type="submit">Submit Reservation Request</button>
+          <p class="form-note">Your reservation is not confirmed until the restaurant team checks availability and contacts you.</p>
+          <p id="bookingMessage" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">Get in touch</div>
+          <h2>Visit Spice Garden</h2>
+          <p>For reservations, group bookings, custom orders, and menu enquiries, contact our team.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card"><h3>📍 Address</h3><p class="muted">Bengaluru, Karnataka, India<br />Replace with your full restaurant address.</p></div>
+          <div class="contact-card"><h3>☎ Phone</h3><p class="muted"><a href="tel:+919876543210">+91 98765 43210</a><br />Daily, during restaurant hours</p></div>
+          <div class="contact-card"><h3>✉ Email</h3><p class="muted"><a href="mailto:support@spicegarden.com">support@spicegarden.com</a></p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <a class="brand" href="#home" style="color:white;">Spice <span>Garden</span></a>
+      <p>Good food, great moments. © <span id="year"></span> Spice Garden. All rights reserved.</p>
+      <p>Sample restaurant website – update contact details, prices, and policies before publishing.</p>
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById("navToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    navToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        navToggle.setAttribute("aria-expanded", "false");
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const dateInput = document.getElementById("date");
+    const today = new Date();
+    const localToday = new Date(today.getTime() - today.getTimezoneOffset() * 60000)
+      .toISOString().split("T")[0];
+    dateInput.min = localToday;
+
+    document.getElementById("bookingForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!this.reportValidity()) return;
+
+      const data = new FormData(this);
+      const details = {
+        name: data.get("name"),
+        phone: data.get("phone"),
+        date: data.get("date"),
+        time: data.get("time"),
+        guests: data.get("guests"),
+        seating: data.get("seating"),
+        requests: data.get("requests")
+      };
+
+      document.getElementById("bookingMessage").textContent =
+        `Thank you, ${details.name}. Your reservation request for ${details.guests} guest(s) on ${details.date} at ${details.time} has been prepared. Please call +91 98765 43210 to confirm availability.`;
+
+      console.log("Demo reservation request (not sent to a server):", details);
+      this.reset();
+      dateInput.min = localToday;
+    });
+  </script>
+  <script src="https://api.reapdat.com/static/widget.js"
+  data-tenant-id="df7649be-2cd4-4a01-a2fb-7df0e5b96480" data-key="pk_live_4z4G3UaT-cswVfYSGI4k_FSLaja12_08" async></script>
+</body>
+</html>
